@@ -1,0 +1,6 @@
+*.dockerfile
+*.dockerignore
+specification
+.gitkeep
+*.md
+test

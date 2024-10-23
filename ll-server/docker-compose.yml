@@ -1,0 +1,35 @@
+version: '3.8'
+
+networks:
+  my-network:
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: ll_db
+    environment:
+      POSTGRES_DB: lldb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - my-network
+
+  springbootapp:
+    image: spring-boot-app
+    depends_on:
+      - postgres
+    ports:
+      - "5433:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://ll_db:5432/lldb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: secret
+    networks:
+      - my-network
+
+volumes:
+  postgres_data:
