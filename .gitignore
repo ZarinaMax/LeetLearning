@@ -19,3 +19,5 @@ target/
 __pycache__
 task_*/
 test.log
+
+venv/

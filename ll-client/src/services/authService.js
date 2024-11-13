@@ -1,7 +1,7 @@
 import axios from "axios";
+import config from "../config";
 
-// Here must be ll-server URL
-const API_URL = "http://localhost:5000/api/auth";
+const API_URL = config.API_URL + "/auth";
 
 const register = (username, email, password) => {
   return axios.post(`${API_URL}/register`, { username, email, password });
@@ -12,7 +12,7 @@ const login = (email, password) => {
     .post(`${API_URL}/login`, { email, password })
     .then((response) => {
       if (response.data.token) {
-        localStorage.setItem("user", JSON.stringify(response.data));
+        localStorage.setItem("token", response.data.token);
       }
       return response.data;
     });

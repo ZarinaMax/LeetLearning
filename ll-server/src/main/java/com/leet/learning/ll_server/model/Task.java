@@ -10,11 +10,10 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String name;
     private Integer timeout;
     private Integer memoryLimit;
-
+    private String name;
+    private String difficulty;
     private String description;
 
     @Column(name = "created_at")

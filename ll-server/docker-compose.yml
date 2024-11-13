@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 networks:
   my-network:
@@ -24,6 +24,7 @@ services:
       - postgres
     ports:
       - "5433:8080"
+      - "5005:5005"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://ll_db:5432/lldb
       SPRING_DATASOURCE_USERNAME: postgres

@@ -19,6 +19,7 @@ leet-learning
 * **timeout**: The time limit in seconds of test computation
 * **memory_limit**: The memory limit in MB of test computation
 * **description**: A brief description of the task
+* **difficulty**: The difficulty level of the task (e.g., "easy", "medium", "hard")
 * **created_at**: Timestamp when the task was created
 
 ### Test

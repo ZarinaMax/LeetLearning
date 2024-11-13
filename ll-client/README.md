@@ -1,70 +1,130 @@
-# Getting Started with Create React App
+# Documentation for Running ll-client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+`ll-client` is a frontend application built using React, Material-UI, and Tailwind CSS. It provides an interface for user registration, authentication, and displays user information and statistics.
 
-In the project directory, you can run:
+## Requirements
 
-### `npm start`
+- Node.js and npm (Node Package Manager)
+- A server running on port 5433 (either `ll-server` or `mock-server`)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Installation and Running
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Step 1: Install Node.js and npm
 
-### `npm test`
+Ensure that you have Node.js and npm installed. You can check this by running the following commands in your terminal:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```sh
+node -v
+npm -v
+```
 
-### `npm run build`
+If they are not installed, download and install them from [nodejs.org](https://nodejs.org/).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Step 2: Clone the Repository
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Clone the `ll-client` repository to your local machine:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```sh
+git clone <URL of your repository>
+cd ll-client
+```
 
-### `npm run eject`
+### Step 3: Install Dependencies
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Install all necessary dependencies for the project:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```sh
+npm install
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Step 4: Run mock-server (if ll-server is not available)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+If you do not have `ll-server` running, you can use `mock-server` located in the `mock-server` folder.
 
-## Learn More
+Navigate to the `mock-server` folder and install dependencies:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```sh
+cd mock-server
+npm install
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Start the `mock-server`:
 
-### Code Splitting
+```sh
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Step 5: Run ll-client
 
-### Analyzing the Bundle Size
+Navigate back to the root folder of `ll-client` and start the application:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```sh
+cd ..
+npm start
+```
 
-### Making a Progressive Web App
+The application will be available at [http://localhost:3000](http://localhost:3000).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Project Structure
 
-### Advanced Configuration
+- `public/` - Contains static files such as `index.html`, `manifest.json`, and `robots.txt`.
+- `src/` - Contains the source code of the application.
+  - `components/` - Contains React components such as `Register`, `Login`, `Dashboard`, and `AccountSettingsForm`.
+  - `services/` - Contains services for interacting with the API, such as `authService` and `userService`.
+  - `App.js` - The main component of the application.
+  - `index.js` - The entry point of the application.
+  - `config.js` - Configuration file for API URLs.
+  - `index.css` - Styles for the application.
+- `mock-server/` - Contains files for running the mock server.
+  - `server.js` - The main server file.
+  - `package.json` - Dependency and script file for the mock server.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Main Commands
 
-### Deployment
+### Install Dependencies
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```sh
+npm install
+```
 
-### `npm run build` fails to minify
+### Run the Application
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```sh
+npm start
+```
+
+### Run the Mock Server
+
+```sh
+cd mock-server
+npm start
+```
+
+## Additional Information
+
+### Libraries Used
+
+- **React**: The main framework for building the user interface.
+- **Material-UI**: A component library for React.
+- **Tailwind CSS**: A utility-first CSS framework.
+- **Axios**: An HTTP client for making requests to the server.
+- **Formik**: A library for managing forms and validation.
+- **Yup**: A schema validation library.
+
+### Component Structure
+
+- **Register**: Component for user registration.
+- **Login**: Component for user authentication.
+- **Dashboard**: Component for displaying user information and statistics.
+- **AccountSettingsForm**: Form for updating user information.
+
+### Services
+
+- **authService**: Service for user registration and authentication.
+- **userService**: Service for retrieving and updating user information.
+
+## Conclusion
+
+By following this documentation, you will be able to install and run `ll-client`, as well as use the mock server for testing the application's functionality. If you have any questions or issues, refer to the documentation of the libraries used or contact the project developers.
