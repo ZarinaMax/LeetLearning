@@ -1,7 +1,9 @@
+// src/services/attemptService.js
 import axios from "axios";
 import config from "../config";
 
 const API_URL = config.API_URL + "/attempts";
+const USER_ATTEMPTS_URL = config.API_URL + "/user/attempts";
 
 const submitAttempt = (taskId, code) => {
   const token = localStorage.getItem("token");
@@ -25,9 +27,29 @@ const getAttemptStatus = (attemptId) => {
   });
 };
 
+const getUserAttempts = () => {
+  const token = localStorage.getItem("token");
+  return axios.get(USER_ATTEMPTS_URL, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+const getAttemptsByTaskId = (taskId) => {
+  const token = localStorage.getItem("token");
+  return axios.get(`${USER_ATTEMPTS_URL}/task/${taskId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 const attemptService = {
   submitAttempt,
   getAttemptStatus,
+  getUserAttempts,
+  getAttemptsByTaskId,
 };
 
 export default attemptService;

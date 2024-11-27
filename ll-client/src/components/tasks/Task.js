@@ -21,6 +21,7 @@ const Task = () => {
   const [codeTemplate, setCodeTemplate] = useState("");
   const [attemptStatus, setAttemptStatus] = useState(null);
   const [code, setCode] = useState("");
+  const [detailedError, setDetailedError] = useState(null);
 
   useEffect(() => {
     taskService
@@ -39,6 +40,10 @@ const Task = () => {
   }, [id]);
 
   const handleSubmit = () => {
+    // Сбрасываем предыдущие результаты
+    setAttemptStatus(null);
+    setDetailedError(null);
+
     const encodedCode = btoa(code);
     attemptService
       .submitAttempt(id, encodedCode)
@@ -52,6 +57,9 @@ const Task = () => {
             .getAttemptStatus(response.data.id)
             .then((statusResponse) => {
               setAttemptStatus(statusResponse.data.status);
+              if (statusResponse.data.status === "failed") {
+                setDetailedError(statusResponse.data.results);
+              }
             })
             .catch((error) => {
               console.error("Error fetching attempt status", error);
@@ -94,6 +102,18 @@ const Task = () => {
             >
               Attempt Status: {attemptStatus}
             </Typography>
+          )}
+          {detailedError && (
+            <div>
+              <Typography variant="h6" color="error">
+                Detailed Errors:
+              </Typography>
+              {detailedError.map((error, index) => (
+                <Typography key={index} color="error">
+                  Test {index + 1}: {error.error}
+                </Typography>
+              ))}
+            </div>
           )}
           <CodeEditor initialCode={codeTemplate} onCodeChange={setCode} />
         </Grid>

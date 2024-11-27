@@ -1,4 +1,4 @@
-# leet-learning/ll-solution-runner/app/docker_manager.py
+# leet-learning\ll-solution-runner\app\docker_manager.py
 
 import docker
 import base64
@@ -25,6 +25,8 @@ def run_code_in_docker(code, tests, attempt_id):
         execution_time = time.time() - start_time
         test_result = compare_results(actual_output, expected_output, test, execution_time)
         result['results'].append(test_result)
+        if test_result['result'] == 'failed':
+            result['status'] = 'failed'
     return result
 
 def execute_code_in_docker(code, input_data):
@@ -52,23 +54,33 @@ def execute_code_in_docker(code, input_data):
             json_str = logs[start_index + len(start_marker):end_index].strip()
             logging.debug(f'Extracted JSON: {json_str}')
             result = json.loads(json_str)
-            return result['result']
+            return result
         else:
             logging.error('Markers not found or invalid in logs')
-            return 'Markers not found or invalid in logs'
+            return {'error': 'Markers not found or invalid in logs', 'logs': logs}
     except json.JSONDecodeError as e:
         logging.error(f'JSON decode error: {e}')
-        return f'JSON decode error: {e}'
+        return {'error': f'JSON decode error: {e}'}
     except Exception as e:
         logging.error(f'Error executing code in Docker: {e}')
-        return str(e)
+        return {'error': str(e)}
 
 def compare_results(actual_output, expected_output, test, execution_time):
+    if 'error' in actual_output:
+        return {
+            'test': test,
+            'result': 'error',
+            'output': None,
+            'error': actual_output.get('error'),
+            'execution_time': 0,
+            'memory_usage': 0
+        }
+
     result = {
         'test': test,
-        'result': 'passed' if actual_output == expected_output else 'failed',
-        'output': actual_output,
-        'error': None if actual_output == expected_output else f'Expected {expected_output}, but got {actual_output}',
+        'result': 'passed' if actual_output.get('result') == expected_output else 'failed',
+        'output': actual_output.get('result'),
+        'error': None if actual_output.get('result') == expected_output else f'Expected "{expected_output}", but got "{actual_output.get("result")}"',
         'execution_time': execution_time,
         'memory_usage': 0  # Placeholder for memory usage
     }

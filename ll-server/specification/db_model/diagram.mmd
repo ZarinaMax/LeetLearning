@@ -36,8 +36,20 @@ erDiagram
         datetime created_at
     }
 
+    Tag {
+        int id PK
+        string name
+    }
+
+    TaskTags {
+        int task_id FK
+        int tag_id FK
+    }
+
     %% Relationships
     User ||--o{ Attempt: "has many"
     Task ||--o{ Test : "has many"
     Attempt ||--|| Task : "has one"
     Attempt ||--|| Test : "has one"
+    Task ||--o{ TaskTags: "has many"
+    Tag ||--o{ TaskTags: "has many"

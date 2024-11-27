@@ -1,9 +1,15 @@
-// src/components/user/Register.js
-import React from "react";
-import { TextField, Button, Grid, Typography, Container } from "@mui/material";
+import React, { useState } from "react";
+import {
+  TextField,
+  Button,
+  Typography,
+  Container,
+  Link as MuiLink,
+} from "@mui/material";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import authService from "../../services/authService";
+import { Link } from "react-router-dom";
 
 const validationSchema = Yup.object({
   username: Yup.string().required("Username is required"),
@@ -16,16 +22,18 @@ const validationSchema = Yup.object({
 });
 
 const Register = () => {
+  const [feedback, setFeedback] = useState(null);
+
   const handleSubmit = (values, { setSubmitting, setErrors }) => {
     authService
       .register(values.username, values.email, values.password)
       .then((response) => {
         // Handle success (e.g., show a success message, redirect to login page)
-        console.log("Registration successful", response);
+        setFeedback({ type: "success", message: response.data.message });
       })
       .catch((error) => {
         // Handle error (e.g., show an error message)
-        console.error("Registration error", error);
+        setFeedback({ type: "error", message: error.response.data.message });
         setErrors({ submit: "Registration failed. Please try again." });
       })
       .finally(() => {
@@ -39,6 +47,25 @@ const Register = () => {
         <Typography component="h1" variant="h5">
           Register
         </Typography>
+        {feedback && (
+          <Typography
+            color={feedback.type === "success" ? "primary" : "error"}
+            variant="body2"
+          >
+            {feedback.message}
+          </Typography>
+        )}
+        {feedback && feedback.type === "success" && (
+          <Typography
+            variant="body2"
+            align="center"
+            style={{ marginTop: "16px" }}
+          >
+            <MuiLink component={Link} to="/login">
+              Go to Login
+            </MuiLink>
+          </Typography>
+        )}
         <Formik
           initialValues={{ username: "", email: "", password: "" }}
           validationSchema={validationSchema}

@@ -1,4 +1,4 @@
-#leet-learning\ll-solution-runner\executor\executor.py
+# leet-learning\ll-solution-runner\executor\executor.py
 import sys
 import base64
 import json
@@ -37,7 +37,7 @@ def execute_user_code(code, input_data):
 
         if process.returncode != 0:
             logging.error(f'Error executing user code: {stderr}')
-            return {'error': stderr}
+            return {'error': stderr, 'output': stdout}
 
         logging.debug(f'Execution output: {stdout.strip()}')
         return {'result': stdout.strip()}
